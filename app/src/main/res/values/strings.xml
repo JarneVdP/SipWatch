@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">DrinkR</string>
+    <string name="title_home">Home</string>
+    <string name="title_drinks">Drinks</string>
+    <string name="title_agenda">Agenda</string>
+    <string name="capture">Capture Image</string>
+    <string name="detect">Detect Text</string>
+    <string name="water_intake">Your water intake for this week is:</string>
+    <string name="submit">Submit</string>
+
+    <string-array name="drink_cl_array">
+        <item>5cl</item>
+        <item>10cl</item>
+        <item>25cl</item>
+        <item>33cl</item>
+        <item>50cl</item>
+        <item>75cl</item>
+        <item>100cl</item>
+    </string-array>
+    <string-array name="drinks">
+        <item>Cara</item>
+        <item>Jupiler</item>
+        <item>Water</item>
+        <item>Fruitsap</item>
+        <item>WiCo</item>
+        <item>Alfredo</item>
+        <item>Cola</item>
+        <item>Fanta</item>
+        <item>Koffie</item>
+        <item>Thee</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="back"><![CDATA[<<]]></string>
+    <string name="forward"><![CDATA[>>]]></string>
+    <string name="edit">edit</string>
+    <string name="delete">delete</string>
+</resources>

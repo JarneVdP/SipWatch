@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="drink_cl">
+        <item>5cl</item>
+        <item>10cl</item>
+        <item>25cl</item>
+        <item>33cl</item>
+        <item>50cl</item>
+        <item>75cl</item>
+        <item>100cl</item>
+    </string-array>
+
+    <string-array name="drink_type">
+        <item>Beer</item>
+        <item>Wine</item>
+        <item>Liquor</item>
+        <item>Soft drink</item>
+        <item>Water</item>
+        <item>Juice</item>
+        <item>Other</item>
+    </string-array>
+</resources>

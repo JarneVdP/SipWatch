@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.drinks.DrinksFragment">
+
+
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <LinearLayout
+        android:id="@+id/btn_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/bottombar"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/capture_image_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/capture"
+            tools:ignore="ButtonStyle" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/btn_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <!-- Detect the text on the image, if the text is an element of the list, autocomplete the input field-->
+        <AutoCompleteTextView
+            android:id="@+id/autocomplete_drink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="0dp"
+            android:ems="10"
+            android:hint="@string/title_drinks"
+            android:inputType="textPersonName"
+            android:dropDownHeight="300dp"
+            android:minHeight="48dp"/>
+
+        <!-- get an input field for the name of the drink
+        <EditText
+            android:id="@+id/drinkname_input"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginEnd="7.5dp"
+            android:ems="10"
+            android:hint="Name"
+            android:inputType="textPersonName" />
+        -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- get an dropdown menu for the amount of the drink -->
+            <!--place the spinners next to each other-->
+
+            <Spinner
+                android:id="@+id/drinkamount_input"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="7.5dp"
+                android:layout_weight="1"
+                android:entries="@array/drink_cl" />
+
+            <Spinner
+                android:id="@+id/drinktype_input"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginStart="7.5dp"
+                android:entries="@array/drink_type" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btnsubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="@string/submit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_layout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
