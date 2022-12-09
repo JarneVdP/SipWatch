@@ -9,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.drinkr.R
+import com.example.drinkr.deleteDrink
 import com.example.drinkr.readFromFile
 import com.example.drinkr.writeToFile
 
@@ -31,20 +32,23 @@ RecyclerView.Adapter<DrinkAdapter.Viewholder>() {
         holder.drinkDate.text = model.getDrink_date()
         holder.deleteButton.setOnClickListener {
             //get the text from the recyclerview
+            Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show()
             val text = model.getDrink_name()
             //get the text from the file
             val fileText = readFromFile(context, "drinkStorage.txt")
             //loop trough the file text and remove the line that matches the text from the recyclerview
             val linesplit = fileText.split("//")
 
-            for (line in linesplit) {
-                val drink = line.split(";")
-                val updatedLines = line.filterNot { drink[2] == text }
-                //delete drinkStorage.txt
-                //notifyItemRemoved(position)
-//            // delete the drink from the file
-//            deleteLineFromFile(context, "drinkr.txt", model.getDrink_name())
-            }
+            deleteDrink(context, "drinkStorage.txt", model)
+//            for (line in linesplit) {
+//                val drink = line.split(";")
+//                val updatedLines = line.filterNot { drink[2] == text }
+//                //delete drinkStorage.txt
+//
+//                //notifyItemRemoved(position)
+////            // delete the drink from the file
+////            deleteLineFromFile(context, "drinkr.txt", model.getDrink_name())
+//            }
             //writeToFile(context, "drinkStorage.txt", updatedLines)
         }
     }

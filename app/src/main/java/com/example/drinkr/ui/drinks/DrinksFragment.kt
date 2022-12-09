@@ -102,20 +102,20 @@ class DrinksFragment : Fragment() {
         val currentDate = currentDateHourMin.substring(0, 10)
         //Get the hour and minute
         val hourminute = currentDateHourMin.substring(11, 16)
+        //set mode as append
+        val mode = Context.MODE_APPEND
         buttonsubmit.setOnClickListener {
             if (autocompletetextview.text.toString() == "" || spinner_cl.selectedItem.toString() == "" || spinner_type.selectedItem.toString() == "") {
                 Toast.makeText(context, "Please fill in all the fields", Toast.LENGTH_SHORT).show()
             } else {
-                //write to file
-                context?.let { it1 ->
-                    writeToFile(
-                        it1, file,
-                        "$currentDate ; $hourminute ; ${autocompletetextview.text} ;" +
-                                " ${spinner_type.selectedItem} ;  ${spinner_cl.selectedItem}//"
-                    )
-                    //clear the text
-                    autocompletetextview.text.clear()
-                }
+                //write to file using wToFIle function
+                context?.let { it1 -> writeToFile(it1,
+                    file,
+                    currentDate + ";" + hourminute + ";" + autocompletetextview.text.toString()
+                            + ";" + spinner_cl.selectedItem.toString() + ";" +
+                            spinner_type.selectedItem.toString() + "//", mode) }
+                Toast.makeText(context, "Saved to $file", Toast.LENGTH_SHORT).show()
+                autocompletetextview.text.clear()
             }
         }
     }
@@ -158,12 +158,14 @@ class DrinksFragment : Fragment() {
                 recognizer.process(it)
                     //if its successful, show text in textview
                     .addOnSuccessListener { visionText ->
-                        // show the text in the result_detection textview
                         // split the text into lines and added them tp recognizedText Mutablelist
                         val tmp = visionText.text.split("\n", " ") as MutableList<String>
                         recognizedText.addAll(tmp)
-
+                        //add the recognized text to the adapter
+                        val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, recognizedText)
+                        autocompletetextview.setAdapter(adapter)
                         autocompletetextview.showDropDown()
+
                         //recognizedText.forEach { Toast.makeText(context, "reco  "+ recognizedText, Toast.LENGTH_SHORT).show() }
                     }
                     .addOnFailureListener { e ->

@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.drinkr.checkFile
 import com.example.drinkr.databinding.FragmentAgendaBinding
 import com.example.drinkr.readFromFile
 import com.example.drinkr.writeToFile
@@ -37,6 +38,8 @@ class AgendaFragment : Fragment() {
         val calendarView = binding.calendarView
         dates.text = "No date selected"
         val file = "drinkStorage.txt"
+        //chcek if file exists
+        context?.let { checkFile(it, file) }
 
         //Initiate the recycler view
         val recyclerView = binding.rcv

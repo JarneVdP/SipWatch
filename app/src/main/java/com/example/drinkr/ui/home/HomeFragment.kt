@@ -52,7 +52,6 @@ class HomeFragment : Fragment() {
             GreetingText.text = "So long partner!"
         }
 
-
 //        // Read the file using readFromFile
 //        val lines = DrinkClass.readFromFile()
 //        //print fileContents to toast
