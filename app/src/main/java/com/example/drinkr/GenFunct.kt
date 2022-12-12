@@ -51,33 +51,28 @@ fun checkFile(context: Context, fileName: String) {
 }
 
 fun removeLineFromFile(context:Context, fileName: String, drink: DrinkModel,
-                       drinkModelArrayList: ArrayList<DrinkModel>, lineToRemove: String) {
+                       drinkModelArrayList: ArrayList<DrinkModel>, lineToRemove: String):
+        ArrayList<DrinkModel>{
     val file = File(context.filesDir, fileName)
-    val tempFile = File(file.getAbsolutePath() + ".tmp")
+    val tempFile = File(file.absolutePath + ".tmp")
 
     val reader = BufferedReader(FileReader(file))
     val writer = PrintWriter(FileWriter(tempFile))
-    drinkModelArrayList.clear()
-    var line: String? = null
+    var line: String?
+    var i = 0
     while (reader.readLine().also { line = it } != null) {
         if (!line?.trim().equals(lineToRemove)) {
-            drinkModelArrayList.add(
-                DrinkModel(
-                    drink.getDrink_date(),   //date
-                    drink.getDrink_time(),   //hour-minute
-                    drink.getDrink_name(),   //name
-                    drink.getDrink_amount(),   //amount
-                    drink.getDrink_type()   //type
-                )
-            )
             writer.println(line)
             writer.flush()
         }
+        else{ drinkModelArrayList.removeAt(i) }
+        i +=1
     }
-    writer.close();
-    reader.close();
+    writer.close()
+    reader.close()
 
     file.delete()
     tempFile.renameTo(file)
-    Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show()
+    Toast.makeText(context, "Deleted ${drink.getDrink_name()}", Toast.LENGTH_SHORT).show()
+    return drinkModelArrayList
 }

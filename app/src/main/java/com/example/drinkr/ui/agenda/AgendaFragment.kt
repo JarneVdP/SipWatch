@@ -12,9 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.drinkr.checkFile
 import com.example.drinkr.databinding.FragmentAgendaBinding
 import com.example.drinkr.readFromFile
-import com.example.drinkr.writeToFile
-//import drink_card layout
-import com.example.drinkr.ui.agenda.DrinkModel
 
 class AgendaFragment : Fragment() {
     private var _binding: FragmentAgendaBinding? = null
@@ -38,7 +35,7 @@ class AgendaFragment : Fragment() {
         val calendarView = binding.calendarView
         dates.text = "No date selected"
         val file = "drinkStorage.txt"
-        //chcek if file exists
+        //check if file exists
         context?.let { checkFile(it, file) }
 
         //Initiate the recycler view
@@ -72,8 +69,8 @@ class AgendaFragment : Fragment() {
                                     drink[0],   //date
                                     drink[1],   //hour-minute
                                     drink[2],   //name
-                                    drink[3],   //amount
-                                    drink[4]    //type
+                                    drink[3],   //type
+                                    drink[4]    //amount
                                 )
                             )
                         }

@@ -62,8 +62,6 @@ class HomeFragment : Fragment() {
             GreetingText.text = "See ya!"
         }
 
-        //TODO: optellen hoeveel gedronken per soort. bij water zetten hoeveel nog te drinken en achohol ...
-        //val progressBar:ProgressBar = binding.progressBar
         val recyclerview_prgrs = binding.rcvProgressbar
         val totalDrankPerType =  calculateTotalDrankPerTypePerDay()
 
@@ -72,10 +70,7 @@ class HomeFragment : Fragment() {
         recyclerview_prgrs.layoutManager = linearLayoutManager
         recyclerview_prgrs.adapter = rcvAdapter
 
-
-        //TODO: linearlayout updaten bij verwijderen van line
         //TODO: logo toevoegen en evt example uit naam halen
-
         return root
     }
 
@@ -100,16 +95,16 @@ class HomeFragment : Fragment() {
             for (line in linesplit) {
                 if (line.isNotBlank()) {
                     val splitted = line.split(";")
-                    val splittedamount = splitted[3].split("cl")
+                    val splittedamount = splitted[4].split("cl")
                     if (splitted[0] == currentDate) {
                         //if the type is already in the dictionary, add the amount to the total amount
-                        if (totalDrankPerType.containsKey(splitted[4])) {
-                            totalDrankPerType[splitted[4]] =
-                                totalDrankPerType[splitted[4]]!! + splittedamount[0].toInt()
+                        if (totalDrankPerType.containsKey(splitted[3])) {
+                            totalDrankPerType[splitted[3]] =
+                                totalDrankPerType[splitted[3]]!! + splittedamount[0].toInt()
                         }
                         //if the type is not in the dictionary, add the type and the amount to the dictionary
                         else {
-                            totalDrankPerType[splitted[4]] = splittedamount[0].toInt()
+                            totalDrankPerType[splitted[3]] = splittedamount[0].toInt()
                         }
                     }
                 }
