@@ -113,7 +113,7 @@ class DrinksFragment : Fragment() {
                     file,
                     currentDate + ";" + hourminute + ";" + autocompletetextview.text.toString()
                             + ";" + spinner_cl.selectedItem.toString() + ";" +
-                            spinner_type.selectedItem.toString() + "//", mode) }
+                            spinner_type.selectedItem.toString(), mode) }
                 Toast.makeText(context, "Saved to $file", Toast.LENGTH_SHORT).show()
                 autocompletetextview.text.clear()
             }

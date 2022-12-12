@@ -12,6 +12,7 @@ fun writeToFile(context: Context, fileName: String, data: String, mode: Int) {
         val outputStreamWriter =
             OutputStreamWriter(context.openFileOutput(fileName, mode))
         outputStreamWriter.write(data)
+        outputStreamWriter.append("\n")
         outputStreamWriter.close()
     } catch (e: IOException) {
         Log.e("Exception", "File write failed: $e")
@@ -25,12 +26,10 @@ fun readFromFile(context: Context, fileName: String): StringBuilder {
     val bufferedReader = BufferedReader(inputStreamReader)
     val stringBuilder = StringBuilder()
     var text: String?
-    while (bufferedReader.readLine().also { text = it } != null) {
-        stringBuilder.append(text)
-    }
     try {
         while (bufferedReader.readLine().also { text = it } != null) {
             stringBuilder.append(text)
+            stringBuilder.append("\n")
         }
     } catch (e: FileNotFoundException) {
         Log.e("login activity", "File not found: $e")
@@ -51,27 +50,34 @@ fun checkFile(context: Context, fileName: String) {
     }
 }
 
-//Delete a drink from the file and the recyclerview
-fun deleteDrink(context: Context, fileName: String, drink: DrinkModel) {
-    //get the text from the file
-    val fileText = readFromFile(context, fileName)
-    var updatedLines = ""
-    //loop trough the file text and remove the line that matches the text from the recyclerview
-    val linesplit = fileText.split("//")
+fun removeLineFromFile(context:Context, fileName: String, drink: DrinkModel,
+                       drinkModelArrayList: ArrayList<DrinkModel>, lineToRemove: String) {
+    val file = File(context.filesDir, fileName)
+    val tempFile = File(file.getAbsolutePath() + ".tmp")
 
-    for (line in linesplit) {
-        val drinkFile = line.split(";")
-        if (drinkFile.size == 5) {
-            Toast.makeText(context, drinkFile[4] + drink.getDrink_amount(), Toast.LENGTH_SHORT).show()
-            if (drinkFile[0] == drink.getDrink_date() && drinkFile[1] == drink.getDrink_time() && drinkFile[2] == drink.getDrink_name() && drinkFile[3] == drink.getDrink_type() && drinkFile[4] == drink.getDrink_amount()) {
-                updatedLines += ""
-            }
-            else{
-                updatedLines += line + "//"
-            }
+    val reader = BufferedReader(FileReader(file))
+    val writer = PrintWriter(FileWriter(tempFile))
+    drinkModelArrayList.clear()
+    var line: String? = null
+    while (reader.readLine().also { line = it } != null) {
+        if (!line?.trim().equals(lineToRemove)) {
+            drinkModelArrayList.add(
+                DrinkModel(
+                    drink.getDrink_date(),   //date
+                    drink.getDrink_time(),   //hour-minute
+                    drink.getDrink_name(),   //name
+                    drink.getDrink_amount(),   //amount
+                    drink.getDrink_type()   //type
+                )
+            )
+            writer.println(line)
+            writer.flush()
         }
     }
-    Toast.makeText(context, updatedLines, Toast.LENGTH_SHORT).show()
-    //write the new file to the file
-    writeToFile(context, fileName, updatedLines, Context.MODE_PRIVATE)
+    writer.close();
+    reader.close();
+
+    file.delete()
+    tempFile.renameTo(file)
+    Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show()
 }

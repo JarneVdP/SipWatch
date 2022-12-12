@@ -1,19 +1,25 @@
 package com.example.drinkr.ui.home
 
-import android.content.Context
+import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.drinkr.checkFile
 import com.example.drinkr.databinding.FragmentHomeBinding
+import com.example.drinkr.readFromFile
+import com.example.drinkr.ui.agenda.PrgrsAdapter
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class HomeFragment : Fragment() {
 
@@ -23,6 +29,7 @@ class HomeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,6 +37,9 @@ class HomeFragment : Fragment() {
     ): View {
         val homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
+        val file = "drinkStorage.txt"
+        //chcek if file exists
+        context?.let { checkFile(it, file) }
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -40,52 +50,32 @@ class HomeFragment : Fragment() {
         val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm")
         val currentDate = sdf.format(Date())
         // get the hour of the day
-        val hour = currentDate.substring(11,13).toInt()
+        val hour = currentDate.substring(11, 13).toInt()
         // set the greeting based on the hour
         if (hour in 0..11) {
-            GreetingText.text = "Good Morning!"
+            GreetingText.text = "Goedemorgen!"
         } else if (hour in 12..17) {
-            GreetingText.text = "Good Afternoon!"
+            GreetingText.text = "Middag!"
         } else if (hour in 18..22) {
-            GreetingText.text = "Good Evening!"
+            GreetingText.text = "Goeienavond !"
         } else {
-            GreetingText.text = "So long partner!"
+            GreetingText.text = "See ya!"
         }
 
-//        // Read the file using readFromFile
-//        val lines = DrinkClass.readFromFile()
-//        //print fileContents to toast
-//        for (line in lines) {
-//            Toast.makeText(context, line, Toast.LENGTH_SHORT).show()
-//        }
+        //TODO: optellen hoeveel gedronken per soort. bij water zetten hoeveel nog te drinken en achohol ...
+        //val progressBar:ProgressBar = binding.progressBar
+        val recyclerview_prgrs = binding.rcvProgressbar
+        val totalDrankPerType =  calculateTotalDrankPerTypePerDay()
 
-//        val file = "drinkStorage.txt"
-//
-//        val fileInputStream: FileInputStream? = activity?.openFileInput(file)
-//        val inputStreamReader = InputStreamReader(fileInputStream)
-//        val bufferedReader = BufferedReader(inputStreamReader)
-//        val stringBuilder = StringBuilder()
-//        var text: String? = null
-//        while (run {
-//                text = bufferedReader.readLine()
-//                text
-//            } != null) {
-//            stringBuilder.append(text)
-//        }
-//
-//        //split the text on the newline and place in new array
-//        val lines = stringBuilder.toString().split("//").toTypedArray()
-//        var displayline = ""
-//        // display all the lines
-//        for (line in lines) {
-//            Toast.makeText(context, line, Toast.LENGTH_SHORT).show()
-//        }
+        val rcvAdapter = context?.let { PrgrsAdapter(it, totalDrankPerType) }
+        val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        recyclerview_prgrs.layoutManager = linearLayoutManager
+        recyclerview_prgrs.adapter = rcvAdapter
 
 
-//        val textView: TextView = binding.textHome
-//        homeViewModel.text.observe(viewLifecycleOwner) {
-//            textView.text = it
-//        }
+        //TODO: linearlayout updaten bij verwijderen van line
+        //TODO: logo toevoegen en evt example uit naam halen
+
         return root
     }
 
@@ -94,28 +84,37 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
-//    data class Drink(val date: String, val time: String, val drink: String, val type: String, val amount: String){}
+    //create a function to calculate the total amount drank per type per day
+    fun calculateTotalDrankPerTypePerDay(): MutableMap<String, Int> {
+        //get the date of today
+        val sdf = SimpleDateFormat("dd/MM/yyyy")
+        val currentDate = sdf.format(Date())
 
-    //function to read from file
-//    fun readFromFile(file: String): Array<String> {
-//
-//        val fileInputStream: FileInputStream? = activity?.openFileInput(file)
-//        val inputStreamReader = InputStreamReader(fileInputStream)
-//        val bufferedReader = BufferedReader(inputStreamReader)
-//        val stringBuilder = StringBuilder()
-//        var text: String? = null
-//        try {
-//            while (run {
-//                    text = bufferedReader.readLine()
-//                    text
-//                } != null) {
-//                stringBuilder.append(text)
-//            }
-//        } catch (e: IOException) {
-//            e.printStackTrace()
-//        }
-//        //split the text on the newline and place in new array
-//        val lines = stringBuilder.toString().split("//").toTypedArray()
-//        return lines
-//    }
+        //create a dictionary to store the total amount drank per type
+        val totalDrankPerType = mutableMapOf<String, Int>()
+        //reac the text file
+        val file = "drinkStorage.txt"
+        val stringOfInput = context?.let { it1 -> readFromFile(it1, file) }
+        val linesplit = stringOfInput?.split("\n")
+        if (linesplit != null) {
+            for (line in linesplit) {
+                if (line.isNotBlank()) {
+                    val splitted = line.split(";")
+                    val splittedamount = splitted[3].split("cl")
+                    if (splitted[0] == currentDate) {
+                        //if the type is already in the dictionary, add the amount to the total amount
+                        if (totalDrankPerType.containsKey(splitted[4])) {
+                            totalDrankPerType[splitted[4]] =
+                                totalDrankPerType[splitted[4]]!! + splittedamount[0].toInt()
+                        }
+                        //if the type is not in the dictionary, add the type and the amount to the dictionary
+                        else {
+                            totalDrankPerType[splitted[4]] = splittedamount[0].toInt()
+                        }
+                    }
+                }
+            }
+        }
+        return totalDrankPerType
+    }
 }

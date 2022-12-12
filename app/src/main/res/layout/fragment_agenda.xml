@@ -34,17 +34,18 @@
         app:layout_constraintTop_toBottomOf="@+id/text_calendar" />
 
     <!-- add a calendar view -->
+
+
     <CalendarView
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/text_calendar"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_calendar" />
-
 
     <ListView
         android:id="@+id/eventListView"
@@ -55,25 +56,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calendarView" />
 
-
     <!-- make a scroll view with a recycler view -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="5"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eventListView">
+        android:layout_marginBottom="60dp"
+        app:layout_constraintTop_toBottomOf="@+id/calendarView">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="60dp"
             android:orientation="vertical" />
     </ScrollView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

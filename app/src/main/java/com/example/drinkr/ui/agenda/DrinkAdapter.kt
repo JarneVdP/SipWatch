@@ -7,11 +7,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.drinkr.R
-import com.example.drinkr.deleteDrink
-import com.example.drinkr.readFromFile
-import com.example.drinkr.writeToFile
+import com.example.drinkr.*
 
 class DrinkAdapter(private val context: Context, drinkModelArrayList: ArrayList<DrinkModel>) :
 RecyclerView.Adapter<DrinkAdapter.Viewholder>() {
@@ -30,26 +28,15 @@ RecyclerView.Adapter<DrinkAdapter.Viewholder>() {
         holder.drinkType.text = model.getDrink_type()
         holder.drinkTime.text = model.getDrink_time()
         holder.drinkDate.text = model.getDrink_date()
-        holder.deleteButton.setOnClickListener {
-            //get the text from the recyclerview
-            Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show()
-            val text = model.getDrink_name()
-            //get the text from the file
-            val fileText = readFromFile(context, "drinkStorage.txt")
-            //loop trough the file text and remove the line that matches the text from the recyclerview
-            val linesplit = fileText.split("//")
 
-            deleteDrink(context, "drinkStorage.txt", model)
-//            for (line in linesplit) {
-//                val drink = line.split(";")
-//                val updatedLines = line.filterNot { drink[2] == text }
-//                //delete drinkStorage.txt
-//
-//                //notifyItemRemoved(position)
-////            // delete the drink from the file
-////            deleteLineFromFile(context, "drinkr.txt", model.getDrink_name())
-//            }
-            //writeToFile(context, "drinkStorage.txt", updatedLines)
+        holder.deleteButton.setOnClickListener {
+            val removeline = model.getDrink_date() + ";" + model.getDrink_time() + ";" +
+                    model.getDrink_name() + ";" + model.getDrink_type() +
+                    ";" + model.getDrink_amount()
+            removeLineFromFile(context, "drinkStorage.txt", model,
+                drinkModelArrayList, removeline)
+            notifyItemRemoved(position)
+            //notifyItemRangeRemoved(position, drinkModelArrayList.size)
         }
     }
 

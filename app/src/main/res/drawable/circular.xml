@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="ring"
+    android:innerRadius="25dp"
+    android:thickness="40dp"
+    android:useLevel="true">
+    <gradient
+        android:startColor="@android:color/holo_green_dark"
+        android:centerColor="@android:color/holo_orange_light"
+        android:endColor="@android:color/holo_red_dark"
+        android:type="sweep"/>
+</shape>
+<!--
+    <gradient
+        android:startColor="@android:color/holo_green_dark"
+        android:centerColor="@android:color/holo_orange_light"
+        android:endColor="@android:color/holo_red_light"
+        android:type="sweep"/>
+        android:startColor="@{isWater ? @android:color/holo_green_dark : @android:color/holo_red_light}"
+        android:endColor="@{isWater ? @android:color/holo_red_light : @android:color/holo_green_dark}"
+-->

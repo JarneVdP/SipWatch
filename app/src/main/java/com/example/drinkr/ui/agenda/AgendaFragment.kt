@@ -48,7 +48,8 @@ class AgendaFragment : Fragment() {
         val courseAdapter = context?.let { DrinkAdapter(it, drinkModelArrayList) }
         val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-        //if the date gets chanmed from the calenderview, fill in the recycler view with the drinks of that date
+
+        //if the date gets changed from the calenderView, fill in the recycler view with the drinks of that date
         calendarView.setOnDateChangeListener{ view, year, month, dayOfMonth ->
             //make dayofmonth leading zero if it is less than 10
             val day = if (dayOfMonth < 10) "0$dayOfMonth" else "$dayOfMonth"
@@ -58,8 +59,7 @@ class AgendaFragment : Fragment() {
             //clear drinkModelArrayList
             drinkModelArrayList.clear()
             val stringOfInput = context?.let { it1 -> readFromFile(it1, file) }
-
-            val linesplit = stringOfInput?.split("//")
+            val linesplit = stringOfInput?.split("\n")
             if (linesplit != null) {
                 for (line in linesplit){
                     val drink = line.split(";")
@@ -83,6 +83,7 @@ class AgendaFragment : Fragment() {
             recyclerView.layoutManager = linearLayoutManager
             recyclerView.adapter = courseAdapter
         }
+
         return root
     }
 

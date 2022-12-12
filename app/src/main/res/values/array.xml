@@ -11,12 +11,12 @@
     </string-array>
 
     <string-array name="drink_type">
-        <item>Beer</item>
-        <item>Wine</item>
-        <item>Liquor</item>
-        <item>Soft drink</item>
         <item>Water</item>
-        <item>Juice</item>
-        <item>Other</item>
+        <item>Fruitsap</item>
+        <item>Frisdrank</item>
+        <item>Bier</item>
+        <item>Wijn</item>
+        <item>Sterke drank</item>
+        <item>Andere</item>
     </string-array>
 </resources>
