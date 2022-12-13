@@ -1,4 +1,4 @@
-package com.example.drinkr.ui.agenda
+package com.jarnevdp.SipWatch.ui.agenda
 
 import android.content.Context
 import android.util.Log
@@ -7,10 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.drinkr.R
-import com.example.drinkr.removeLineFromFile
+import com.jarnevdp.SipWatch.R
+import com.jarnevdp.SipWatch.removeLineFromFile
 
 class DrinkAdapter(private val context: Context, drinkModelArrayList: ArrayList<DrinkModel>) :
 RecyclerView.Adapter<DrinkAdapter.Viewholder>() {

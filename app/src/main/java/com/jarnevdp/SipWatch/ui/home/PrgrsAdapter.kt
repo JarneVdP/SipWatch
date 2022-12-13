@@ -1,4 +1,4 @@
-package com.example.drinkr.ui.agenda
+package com.jarnevdp.SipWatch.ui.agenda
 
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
@@ -7,15 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
-import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.drinkr.*
+import com.jarnevdp.SipWatch.*
 
 class PrgrsAdapter(private val context: Context, drinkprgrsMap: MutableMap<String, Int>) :
     RecyclerView.Adapter<PrgrsAdapter.Viewholder>() {

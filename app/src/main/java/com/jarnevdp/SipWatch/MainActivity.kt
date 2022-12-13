@@ -1,8 +1,6 @@
-package com.example.drinkr
+package com.jarnevdp.SipWatch
 
-import android.content.Context
 import android.os.Bundle
-import android.view.View
 import android.widget.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -10,14 +8,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.drinkr.databinding.ActivityMainBinding
-import com.example.drinkr.ui.agenda.DrinkAdapter
-import com.example.drinkr.ui.agenda.DrinkModel
-import java.io.BufferedReader
-import java.io.FileInputStream
-import java.io.IOException
-import java.io.InputStreamReader
+import com.jarnevdp.SipWatch.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {

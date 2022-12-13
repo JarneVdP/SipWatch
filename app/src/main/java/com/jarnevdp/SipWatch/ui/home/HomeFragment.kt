@@ -1,21 +1,17 @@
-package com.example.drinkr.ui.home
+package com.jarnevdp.SipWatch.ui.home
 
-import android.animation.ObjectAnimator
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.drinkr.checkFile
-import com.example.drinkr.databinding.FragmentHomeBinding
-import com.example.drinkr.readFromFile
-import com.example.drinkr.ui.agenda.PrgrsAdapter
+import com.jarnevdp.SipWatch.checkFile
+import com.jarnevdp.SipWatch.databinding.FragmentHomeBinding
+import com.jarnevdp.SipWatch.readFromFile
+import com.jarnevdp.SipWatch.ui.agenda.PrgrsAdapter
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*

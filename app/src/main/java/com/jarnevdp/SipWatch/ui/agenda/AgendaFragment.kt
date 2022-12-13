@@ -1,17 +1,15 @@
-package com.example.drinkr.ui.agenda
+package com.jarnevdp.SipWatch.ui.agenda
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CalendarView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.drinkr.checkFile
-import com.example.drinkr.databinding.FragmentAgendaBinding
-import com.example.drinkr.readFromFile
+import com.jarnevdp.SipWatch.checkFile
+import com.jarnevdp.SipWatch.databinding.FragmentAgendaBinding
+import com.jarnevdp.SipWatch.readFromFile
 
 class AgendaFragment : Fragment() {
     private var _binding: FragmentAgendaBinding? = null

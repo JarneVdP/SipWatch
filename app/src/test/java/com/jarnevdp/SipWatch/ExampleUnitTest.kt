@@ -1,4 +1,4 @@
-package com.example.drinkr
+package com.jarnevdp.SipWatch
 
 import org.junit.Test
 

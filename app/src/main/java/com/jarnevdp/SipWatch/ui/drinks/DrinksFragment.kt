@@ -1,11 +1,10 @@
-package com.example.drinkr.ui.drinks
+package com.jarnevdp.SipWatch.ui.drinks
 
-import android.R
+import com.jarnevdp.SipWatch.R
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
@@ -14,14 +13,11 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.drinkr.databinding.FragmentDrinksBinding
-import com.example.drinkr.writeToFile
+import com.jarnevdp.SipWatch.databinding.FragmentDrinksBinding
+import com.jarnevdp.SipWatch.writeToFile
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
-import java.io.FileOutputStream
-import java.io.File
-import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -79,9 +75,10 @@ class DrinksFragment : Fragment() {
         //declare the autocomplete
         val autocompletetextview: AutoCompleteTextView = binding.autocompleteDrink
         val autocmpstring: Array<String> =
-            resources.getStringArray(com.example.drinkr.R.array.drinks)
+            resources.getStringArray(R.array.drinks)
         recognizedText += autocmpstring
-        val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, recognizedText)
+        val adapter = ArrayAdapter(requireContext(),
+            androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, recognizedText)
         autocompletetextview.setAdapter(adapter)
 
         val buttonsubmit = binding.btnsubmit
@@ -162,7 +159,8 @@ class DrinksFragment : Fragment() {
                         val tmp = visionText.text.split("\n", " ") as MutableList<String>
                         recognizedText.addAll(tmp)
                         //add the recognized text to the adapter
-                        val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, recognizedText)
+                        val adapter = ArrayAdapter(requireContext(),
+                            androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, recognizedText)
                         autocompletetextview.setAdapter(adapter)
                         autocompletetextview.showDropDown()
 

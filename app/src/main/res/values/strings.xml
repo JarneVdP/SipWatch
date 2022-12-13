@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DrinkR</string>
+    <string name="app_name">SipWatch</string>
     <string name="title_home">Home</string>
     <string name="title_drinks">Drinks</string>
     <string name="title_agenda">Agenda</string>

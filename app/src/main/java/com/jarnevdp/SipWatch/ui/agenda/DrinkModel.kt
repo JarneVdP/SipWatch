@@ -1,4 +1,4 @@
-package com.example.drinkr.ui.agenda
+package com.jarnevdp.SipWatch.ui.agenda
 
 //val date: String, val time: String, val drink: String, val type: String, val amount: String){}
 

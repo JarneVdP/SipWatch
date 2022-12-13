@@ -1,4 +1,4 @@
-package com.example.drinkr.ui.agenda
+package com.jarnevdp.SipWatch.ui.agenda
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

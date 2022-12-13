@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "DrinkR"
+rootProject.name = "SipWatch"
 include ':app'

@@ -8,19 +8,19 @@
 
     <fragment
         android:id="@+id/navigation_drinks"
-        android:name="com.example.drinkr.ui.drinks.DrinksFragment"
+        android:name="com.jarnevdp.SipWatch.ui.drinks.DrinksFragment"
         android:label="@string/title_drinks"
         tools:layout="@layout/fragment_drinks" />
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.drinkr.ui.home.HomeFragment"
+        android:name="com.jarnevdp.SipWatch.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.drinkr.ui.agenda.AgendaFragment"
+        android:name="com.jarnevdp.SipWatch.ui.agenda.AgendaFragment"
         android:label="@string/title_agenda"
         tools:layout="@layout/fragment_agenda" />
 </navigation>
