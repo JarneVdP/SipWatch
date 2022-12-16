@@ -117,7 +117,7 @@ class DrinksFragment : Fragment() {
         val mode = Context.MODE_APPEND
         buttonsubmit.setOnClickListener {
             if (autocompletetextview.text.toString() == "" || spinner_cl.selectedItem.toString() == "" || spinner_type.selectedItem.toString() == "") {
-                Toast.makeText(context, "Please fill in all the fields", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Gelieve alle velden in te vullen", Toast.LENGTH_SHORT).show()
             } else {
                 //write to file using wToFIle function
                 context?.let { it1 -> writeToFile(it1,

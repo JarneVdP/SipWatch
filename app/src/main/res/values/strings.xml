@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">SipWatch</string>
     <string name="title_home">Home</string>
-    <string name="title_drinks">Drinks</string>
+    <string name="title_drinks">Drank</string>
     <string name="title_agenda">Agenda</string>
     <string name="capture">Foto nemen</string>
     <string name="detect">Detecteer text</string>

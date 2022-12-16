@@ -32,7 +32,7 @@ class AgendaFragment : Fragment() {
 
         val dates = binding.textCalendar
         val calendarView = binding.calendarView
-        dates.text = "No date selected"
+        dates.text = "Geen datum geselecteerd"
 
         val file = "drinkStorage.txt"
 

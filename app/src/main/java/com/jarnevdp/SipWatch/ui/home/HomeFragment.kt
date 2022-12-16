@@ -33,9 +33,6 @@ class HomeFragment : Fragment() {
     ): View {
         val homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
-        val file = "drinkStorage.txt"
-        //chcek if file exists
-        context?.let { checkFile(it, file) }
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
