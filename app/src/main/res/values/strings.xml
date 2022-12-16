@@ -3,10 +3,16 @@
     <string name="title_home">Home</string>
     <string name="title_drinks">Drinks</string>
     <string name="title_agenda">Agenda</string>
-    <string name="capture">Neem foto</string>
+    <string name="capture">Foto nemen</string>
     <string name="detect">Detecteer text</string>
     <string name="water_intake">Je dronk vandaag al </string>
     <string name="submit">Toevoegen</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="back"><![CDATA[<<]]></string>
+    <string name="forward"><![CDATA[>>]]></string>
+    <string name="edit">edit</string>
+    <string name="delete">delete</string>
+    <string name="barcode_scannen">Barcode scannen</string>
 
     <string-array name="drink_cl_array">
         <item>5cl</item>
@@ -29,10 +35,4 @@
         <item>Koffie</item>
         <item>Thee</item>
     </string-array>
-
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="back"><![CDATA[<<]]></string>
-    <string name="forward"><![CDATA[>>]]></string>
-    <string name="edit">edit</string>
-    <string name="delete">delete</string>
 </resources>

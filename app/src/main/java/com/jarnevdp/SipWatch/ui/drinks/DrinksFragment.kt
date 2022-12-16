@@ -1,11 +1,12 @@
 package com.jarnevdp.SipWatch.ui.drinks
 
-import com.jarnevdp.SipWatch.R
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,11 +14,17 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.jarnevdp.SipWatch.databinding.FragmentDrinksBinding
-import com.jarnevdp.SipWatch.writeToFile
+import com.google.android.gms.tasks.Task
+import com.google.mlkit.vision.barcode.BarcodeScannerOptions
+import com.google.mlkit.vision.barcode.BarcodeScanning
+import com.google.mlkit.vision.barcode.common.Barcode
+import com.google.mlkit.vision.barcode.common.Barcode.FORMAT_CODE_128
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import com.jarnevdp.SipWatch.R
+import com.jarnevdp.SipWatch.databinding.FragmentDrinksBinding
+import com.jarnevdp.SipWatch.writeToFile
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -37,8 +44,9 @@ class DrinksFragment : Fragment() {
     private var imageBitmap: Bitmap? = null
 
     //create an empty global list to store the recognized text
-    private var recognizedText = MutableList<String>(0) { "" }
+    private var recognizedText = MutableList(0) { "" }
 
+    //barcode scanner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,10 +65,6 @@ class DrinksFragment : Fragment() {
 
         val root: View = binding.root
 
-//        val textView: TextView = binding.textDrinks
-//        drinksViewModel.text.observe(viewLifecycleOwner) {
-//            textView.text = it
-//        }
         return root
     }
 
@@ -89,11 +93,21 @@ class DrinksFragment : Fragment() {
             }
         }
 
+        //create a barcode scanner
+//        val btnbarcode = binding.captureBarcodeBtn
+//        btnbarcode.setOnClickListener {
+//            //convert imageBitmap to InputImage
+//            val image:InputImage = InputImage.fromBitmap(imageBitmap!!, 0)
+//            scanBarcodes(image)
+//            takeImage()
+//        }
+
+
         //file
         val file = "drinkStorage.txt"
 
         //get the today's date
-        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm")
+        val sdf = SimpleDateFormat("dd-MM-yyyy HH:mm")
         val currentDateHourMin = sdf.format(Date())
         //get the date
         val currentDate = currentDateHourMin.substring(0, 10)
@@ -107,11 +121,11 @@ class DrinksFragment : Fragment() {
             } else {
                 //write to file using wToFIle function
                 context?.let { it1 -> writeToFile(it1,
-                    file,
+                    currentDate+file,
                     currentDate + ";" + hourminute + ";" + autocompletetextview.text.toString()
                             + ";" + spinner_type.selectedItem.toString() + ";" +
                             spinner_cl.selectedItem.toString(), mode) }
-                Toast.makeText(context, "Saved to $file", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Saved ${autocompletetextview.text}", Toast.LENGTH_SHORT).show()
                 autocompletetextview.text.clear()
             }
         }
@@ -140,6 +154,7 @@ class DrinksFragment : Fragment() {
             imageBitmap = data?.extras?.get("data") as Bitmap
             if (imageBitmap != null) {
                 binding.imageView.setImageBitmap(imageBitmap)
+                //if button captureImageBtn is clicked, run processimage. If button captureBarcodeBtn is clicked, run scanBarcodes
                 processImage()
             }
         }
@@ -174,4 +189,78 @@ class DrinksFragment : Fragment() {
             Toast.makeText(context, "No image found", Toast.LENGTH_SHORT).show()
         }
     }
+
+    // Does not work as expected
+//    private fun scanBarcodes(image: InputImage): Task<MutableList<Barcode>> {
+//        //https://developers.google.com/ml-kit/vision/barcode-scanning/android
+//        // [START set_detector_options]
+//        val options = BarcodeScannerOptions.Builder()
+//            .setBarcodeFormats(
+//                Barcode.FORMAT_QR_CODE,
+//                Barcode.FORMAT_AZTEC)
+//            .build()
+//        // [END set_detector_options]
+//        // [START get_detector]
+//        val scanner = BarcodeScanning.getClient()
+//        // Or, to specify the formats to recognize:
+//        // val scanner = BarcodeScanning.getClient(options)
+//        // [END get_detector]
+//        // [START run_detector]
+//        val result = scanner.process(image)
+//            .addOnSuccessListener { barcodes ->
+//                // Task completed successfully
+//                // [START_EXCLUDE]
+//                // [START get_barcodes]
+//                for (barcode in barcodes) {
+//                    val bounds = barcode.boundingBox
+//                    val corners = barcode.cornerPoints
+//
+//                    val rawValue = barcode.rawValue
+//
+//                    val valueType = barcode.valueType
+//
+//                    // See API reference for complete list of supported types
+//                    Toast.makeText(context, "Barcode format: ${barcode.format}", Toast.LENGTH_SHORT).show()
+//                    when (valueType) {
+//
+//                        Barcode.TYPE_ISBN -> {
+//                            Toast.makeText(context, "ISBN: $rawValue", Toast.LENGTH_SHORT).show()
+//                        }
+//                        Barcode.FORMAT_ITF -> {
+//                            val format = barcode.format
+//                        }
+//                        Barcode.FORMAT_EAN_13 -> {
+//                            val format = barcode.format
+//                        }
+//                        Barcode.TYPE_WIFI -> {
+//                            val ssid = barcode.wifi!!.ssid
+//                            val password = barcode.wifi!!.password
+//                            val type = barcode.wifi!!.encryptionType
+//                        }
+//                        Barcode.TYPE_URL -> {
+//                            val title = barcode.url!!.title
+//                            val url = barcode.url!!.url
+//                        }
+//                    }
+//                    binding.tempo.text = buildString {
+//                    append(rawValue.toString())
+//                    append(" ")
+//                    append(barcode.valueType)
+//                    append(" ")
+//                    append(barcode.format)
+//                    append(" ")
+//                    append(barcode)
+//                    append(" ")
+//                    }
+//                }
+//                // [END get_barcodes]
+//                // [END_EXCLUDE]
+//            }
+//            .addOnFailureListener {
+//                // Task failed with an exception
+//                // ...
+//            }
+//        // [END run_detector]
+//        return result
+//    }
 }

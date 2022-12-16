@@ -5,6 +5,14 @@ import android.util.Log
 import android.widget.Toast
 import com.jarnevdp.SipWatch.ui.agenda.DrinkModel
 import java.io.*
+import java.text.DateFormat
+import java.text.DateFormat.getDateInstance
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
+
+val sdf = SimpleDateFormat("dd-MM-yyyy")
+val currentDate = sdf.format(Date())
 
 // create a general function to write to a file
 fun writeToFile(context: Context, fileName: String, data: String, mode: Int) {
@@ -55,6 +63,7 @@ fun removeLineFromFile(context:Context, fileName: String, drink: DrinkModel,
         ArrayList<DrinkModel>{
     val file = File(context.filesDir, fileName)
     val tempFile = File(file.absolutePath + ".tmp")
+
 
     val reader = BufferedReader(FileReader(file))
     val writer = PrintWriter(FileWriter(tempFile))

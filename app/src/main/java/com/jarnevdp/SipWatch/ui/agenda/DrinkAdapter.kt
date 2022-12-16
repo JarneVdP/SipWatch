@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.jarnevdp.SipWatch.R
+import com.jarnevdp.SipWatch.readFromFile
 import com.jarnevdp.SipWatch.removeLineFromFile
 
 class DrinkAdapter(private val context: Context, drinkModelArrayList: ArrayList<DrinkModel>) :
@@ -29,11 +30,10 @@ RecyclerView.Adapter<DrinkAdapter.Viewholder>() {
         holder.drinkDate.text = model.getDrink_date()
 
         holder.deleteButton.setOnClickListener {
-            Log.d("drinkModelArrayList", "before size: " + drinkModelArrayList.size.toString())
             val removeline = model.getDrink_date() + ";" + model.getDrink_time() + ";" +
                     model.getDrink_name() + ";" + model.getDrink_type() +
                     ";" + model.getDrink_amount()
-            drinkModelArrayList = removeLineFromFile(context, "drinkStorage.txt", model,
+            drinkModelArrayList = removeLineFromFile(context, model.getDrink_date()+"drinkStorage.txt", model,
                 drinkModelArrayList, removeline)
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, drinkModelArrayList.size)

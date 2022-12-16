@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,9 +33,8 @@ class AgendaFragment : Fragment() {
         val dates = binding.textCalendar
         val calendarView = binding.calendarView
         dates.text = "No date selected"
+
         val file = "drinkStorage.txt"
-        //check if file exists
-        context?.let { checkFile(it, file) }
 
         //Initiate the recycler view
         val recyclerView = binding.rcv
@@ -48,12 +48,14 @@ class AgendaFragment : Fragment() {
         calendarView.setOnDateChangeListener{ view, year, month, dayOfMonth ->
             //make dayofmonth leading zero if it is less than 10
             val day = if (dayOfMonth < 10) "0$dayOfMonth" else "$dayOfMonth"
-            val d8 = (day + "/" + (month + 1) + "/" + year) //get
+            val d8 = (day + "-" + (month + 1) + "-" + year) //get
             dates.text = d8
+            //check if file exists
+            context?.let { checkFile(it, d8+file) }
 
             //clear drinkModelArrayList
             drinkModelArrayList.clear()
-            val stringOfInput = context?.let { it1 -> readFromFile(it1, file) }
+            val stringOfInput = context?.let { it1 -> readFromFile(it1, d8+file) }
             val linesplit = stringOfInput?.split("\n")
             if (linesplit != null) {
                 for (line in linesplit){

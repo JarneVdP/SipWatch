@@ -49,11 +49,11 @@ class HomeFragment : Fragment() {
         val hour = currentDate.substring(11, 13).toInt()
         // set the greeting based on the hour
         if (hour in 0..11) {
-            GreetingText.text = "Goedemorgen!"
+            GreetingText.text = "Goeiemorgen!"
         } else if (hour in 12..17) {
             GreetingText.text = "Middag!"
         } else if (hour in 18..22) {
-            GreetingText.text = "Goeienavond !"
+            GreetingText.text = "Goeienavond!"
         } else {
             GreetingText.text = "See ya!"
         }
@@ -78,14 +78,14 @@ class HomeFragment : Fragment() {
     //create a function to calculate the total amount drank per type per day
     fun calculateTotalDrankPerTypePerDay(): MutableMap<String, Int> {
         //get the date of today
-        val sdf = SimpleDateFormat("dd/MM/yyyy")
+        val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
 
         //create a dictionary to store the total amount drank per type
         val totalDrankPerType = mutableMapOf<String, Int>()
-        //reac the text file
+        //read the text file
         val file = "drinkStorage.txt"
-        val stringOfInput = context?.let { it1 -> readFromFile(it1, file) }
+        val stringOfInput = context?.let { it1 -> readFromFile(it1, currentDate+file) }
         val linesplit = stringOfInput?.split("\n")
         if (linesplit != null) {
             for (line in linesplit) {
