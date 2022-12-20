@@ -24,8 +24,6 @@ class AgendaFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val agendaViewModel =
-            ViewModelProvider(this).get(AgendaViewModel::class.java)
 
         _binding = FragmentAgendaBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -61,7 +59,7 @@ class AgendaFragment : Fragment() {
                 for (line in linesplit){
                     val drink = line.split(";")
                     if (drink.size == 5){
-                        //compare the date of the drink with the date selected in the calendar altough they have different formats
+                        //compare the date of the drink with the date selected in the calendar
                         if (drink[0].substring(0, 2) == day && drink[0].substring(3, 5) == (month + 1).toString() && drink[0].substring(6, 10) == year.toString()){
                             //add the drink to the recycler view
                             drinkModelArrayList.add(

@@ -1,10 +1,18 @@
 package com.jarnevdp.SipWatch.ui.home
 
+import android.R
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context.NOTIFICATION_SERVICE
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,27 +29,29 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+
     private val binding get() = _binding!!
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        val file = "drinkStorage.txt"
+        //check if file exists
+        //get the today's date
+        val sdf = SimpleDateFormat("dd-MM-yyyy HH:mm")
+        val currentDate = sdf.format(Date())
+        val date = currentDate.substring(0,10)
+        context?.let { checkFile(it, date+file) }
 
         val GreetingText: TextView = binding.greeting
-        // get the date
-        //get the today's date
-        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm")
-        val currentDate = sdf.format(Date())
+
         // get the hour of the day
         val hour = currentDate.substring(11, 13).toInt()
         // set the greeting based on the hour
@@ -63,7 +73,29 @@ class HomeFragment : Fragment() {
         recyclerview_prgrs.layoutManager = linearLayoutManager
         recyclerview_prgrs.adapter = rcvAdapter
 
-        //TODO: logo toevoegen en evt example uit naam halen
+        //notification, not tested yet
+//        val notificationManager = context?.let { getSystemService(it, NotificationManager::class.java) }
+//        val notification = Notification.Builder(context, "channelId")
+//            .setContentTitle("Drink water!")
+//            .setContentText("Drink water!")
+//            .setSmallIcon(R.drawable.ic_dialog_info)
+//            .build()
+//        notificationManager?.notify(1, notification)
+
+        //https://developer.android.com/develop/ui/views/notifications/build-notification#kts
+        val CHANNEL_ID = "channelId"
+        val builder = NotificationCompat.Builder(this.requireContext(), CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_dialog_info)
+            .setContentTitle("My notification")
+            .setContentText("Hello World!")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+
+        with(context?.let { NotificationManagerCompat.from(it) }) {
+            // notificationId is a unique int for each notification that you must define
+            this?.notify(1, builder.build())
+        }
+
         return root
     }
 

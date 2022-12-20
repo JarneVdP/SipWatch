@@ -36,30 +36,6 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-//        // initiate the button to delete a drink from the recycler view
-//        deleteButton = findViewById(R.id.delete_drink)
-//        //set the onclick listener
-//        deleteButton.setOnClickListener {
-//            //get the text from the recyclerview
-//            val text = findViewById<TextView>(R.id.text_drink_name).text.toString()
-//            //get the text from the file
-//            val fileText = readFromFile(this, "drinkStorage.txt")
-//            //loop trough the file text and remove the line that matches the text from the recyclerview
-//            val linesplit = fileText.split("//")
-//
-//            for (line in linesplit){
-//                val drink = line.split(";")
-//                if (drink.size == 5){
-//                    //if the text from the recyclerview matches the text from the file, remove the line
-//                    if (drink[2] == text){
-//                        //remove the line
-//                        val newFileText = line.replace(line, "")
-//                        writeToFile(this, "drinkStorage.txt",newFileText)
-//                    }
-//                }
-//            }
-//        }
     }
 }
 

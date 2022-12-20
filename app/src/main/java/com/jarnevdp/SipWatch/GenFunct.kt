@@ -16,15 +16,12 @@ val currentDate = sdf.format(Date())
 
 // create a general function to write to a file
 fun writeToFile(context: Context, fileName: String, data: String, mode: Int) {
-    try {
-        val outputStreamWriter =
-            OutputStreamWriter(context.openFileOutput(fileName, mode))
-        outputStreamWriter.write(data)
-        if (data !=""){ outputStreamWriter.append("\n") }
-        outputStreamWriter.close()
-    } catch (e: IOException) {
-        Log.e("Exception", "File write failed: $e")
-    }
+    val outputStreamWriter =
+        OutputStreamWriter(context.openFileOutput(fileName, mode))
+    outputStreamWriter.write(data)
+    if (data !=""){ outputStreamWriter.append("\n") }
+    outputStreamWriter.close()
+
 }
 
 // create a general function to read from a file
@@ -34,19 +31,12 @@ fun readFromFile(context: Context, fileName: String): StringBuilder {
     val bufferedReader = BufferedReader(inputStreamReader)
     val stringBuilder = StringBuilder()
     var text: String?
-    try {
-        while (bufferedReader.readLine().also { text = it } != null) {
-            stringBuilder.append(text)
-            stringBuilder.append("\n")
-        }
-    } catch (e: FileNotFoundException) {
-        Log.e("Read from file", "File not found: $e")
-    } catch (e: IOException) {
-        Log.e("Read from file", "Can not read file: $e")
-    } //catch empty file
-    catch (e: NullPointerException) {
-        Log.e("Read from file", "File is empty: $e")
+
+    while (bufferedReader.readLine().also { text = it } != null) {
+        stringBuilder.append(text)
+        stringBuilder.append("\n")
     }
+
     return stringBuilder
 }
 
@@ -63,29 +53,20 @@ fun removeLineFromFile(context:Context, fileName: String, drink: DrinkModel,
         ArrayList<DrinkModel>{
     val file = File(context.filesDir, fileName)
     val tempFile = File(file.absolutePath + ".tmp")
-
-
+    
     val reader = BufferedReader(FileReader(file))
     val writer = PrintWriter(FileWriter(tempFile))
     var line: String?
     var i = 0
-    try{
-        while (reader.readLine().also { line = it } != null) {
-            if (!line?.trim().equals(lineToRemove)) {
-                writer.println(line)
-                writer.flush()
-            }
-            else{ drinkModelArrayList.removeAt(i) }
-            i +=1
+    while (reader.readLine().also { line = it } != null) {
+        if (!line?.trim().equals(lineToRemove)) {
+            writer.println(line)
+            writer.flush()
         }
-    } catch (e: FileNotFoundException) {
-        Log.e("Delete line from file", "File not found: $e")
-    } catch (e: IOException) {
-        Log.e("Delete line from file", "Can not read file: $e")
-    } //catch empty file
-    catch (e: NullPointerException) {
-        Log.e("Delete line from file", "File is empty: $e")
+        else{ drinkModelArrayList.removeAt(i) }
+        i +=1
     }
+
     writer.close()
     reader.close()
 

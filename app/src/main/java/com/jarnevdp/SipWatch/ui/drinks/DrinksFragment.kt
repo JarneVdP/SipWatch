@@ -6,7 +6,6 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,11 +13,6 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.gms.tasks.Task
-import com.google.mlkit.vision.barcode.BarcodeScannerOptions
-import com.google.mlkit.vision.barcode.BarcodeScanning
-import com.google.mlkit.vision.barcode.common.Barcode
-import com.google.mlkit.vision.barcode.common.Barcode.FORMAT_CODE_128
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
@@ -58,8 +52,6 @@ class DrinksFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         /* first */
-        val drinksViewModel =
-            ViewModelProvider(this).get(DrinksViewModel::class.java)
 
         _binding = FragmentDrinksBinding.inflate(inflater, container, false)
 

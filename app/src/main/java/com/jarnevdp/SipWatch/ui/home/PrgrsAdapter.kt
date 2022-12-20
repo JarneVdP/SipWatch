@@ -36,11 +36,11 @@ class PrgrsAdapter(private val context: Context, drinkprgrsMap: MutableMap<Strin
         }
         if (drinkprgrsMap.keys.elementAt(position) == "Sterke drank") {
             //change the max value of the progressbar to 500
-            holder.drinkprgrsbar.max = 50 //cl
+            holder.drinkprgrsbar.max = 25 //cl
         }
         if (drinkprgrsMap.keys.elementAt(position) == "Wijn" || drinkprgrsMap.keys.elementAt(position) == "Bier") {
             //change the max value of the progressbar to 500
-            holder.drinkprgrsbar.max = 100 //cl
+            holder.drinkprgrsbar.max = 75 //cl
         }
         //animate the progressbar
         itemAnimation(holder)
