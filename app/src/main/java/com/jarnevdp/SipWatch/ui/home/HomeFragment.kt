@@ -1,26 +1,23 @@
 package com.jarnevdp.SipWatch.ui.home
 
 import android.R
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context.NOTIFICATION_SERVICE
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jarnevdp.SipWatch.checkFile
 import com.jarnevdp.SipWatch.databinding.FragmentHomeBinding
 import com.jarnevdp.SipWatch.readFromFile
 import com.jarnevdp.SipWatch.ui.agenda.PrgrsAdapter
-import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -31,7 +28,7 @@ class HomeFragment : Fragment() {
 
 
     private val binding get() = _binding!!
-
+    var notificationtimer = 12
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -73,29 +70,27 @@ class HomeFragment : Fragment() {
         recyclerview_prgrs.layoutManager = linearLayoutManager
         recyclerview_prgrs.adapter = rcvAdapter
 
-        //notification, not tested yet
-//        val notificationManager = context?.let { getSystemService(it, NotificationManager::class.java) }
-//        val notification = Notification.Builder(context, "channelId")
-//            .setContentTitle("Drink water!")
-//            .setContentText("Drink water!")
-//            .setSmallIcon(R.drawable.ic_dialog_info)
-//            .build()
-//        notificationManager?.notify(1, notification)
 
         //https://developer.android.com/develop/ui/views/notifications/build-notification#kts
         val CHANNEL_ID = "channelId"
+        val notificationId = 1
+
         val builder = NotificationCompat.Builder(this.requireContext(), CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_dialog_info)
-            .setContentTitle("My notification")
-            .setContentText("Hello World!")
+            //setsmallicon as ic_launcher does NOT WORKKKK
+            .setSmallIcon(R.mipmap.sym_def_app_icon)
+            .setContentTitle("Drink water!")
+            .setContentText("Vergeet niet om water te drinken!")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setCategory(NotificationCompat.CATEGORY_MESSAGE)
 
-        with(context?.let { NotificationManagerCompat.from(it) }) {
-            // notificationId is a unique int for each notification that you must define
-            this?.notify(1, builder.build())
+        //When it's 12:00, send a notification if the user hasn't drank enough water
+        if (hour == notificationtimer  && totalDrankPerType["Water"]!! < 150) {
+            with(NotificationManagerCompat.from(requireContext())) {
+                // notificationId is a unique int for each notification that you must define
+                notify(notificationId, builder.build())
+            }
+            notificationtimer += 3
         }
-
+        if (notificationtimer > 24) { notificationtimer = 12 }
         return root
     }
 
