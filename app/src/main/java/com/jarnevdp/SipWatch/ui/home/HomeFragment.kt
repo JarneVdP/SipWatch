@@ -1,7 +1,5 @@
 package com.jarnevdp.SipWatch.ui.home
 
-import android.R
-import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +12,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.jarnevdp.SipWatch.R
 import com.jarnevdp.SipWatch.checkFile
 import com.jarnevdp.SipWatch.databinding.FragmentHomeBinding
 import com.jarnevdp.SipWatch.readFromFile
@@ -28,7 +27,6 @@ class HomeFragment : Fragment() {
 
 
     private val binding get() = _binding!!
-    var notificationtimer = 12
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -76,21 +74,18 @@ class HomeFragment : Fragment() {
         val notificationId = 1
 
         val builder = NotificationCompat.Builder(this.requireContext(), CHANNEL_ID)
-            //setsmallicon as ic_launcher does NOT WORKKKK
-            .setSmallIcon(R.mipmap.sym_def_app_icon)
+            .setSmallIcon(R.drawable.ic_logo)
             .setContentTitle("Drink water!")
             .setContentText("Vergeet niet om water te drinken!")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
-        //When it's 12:00, send a notification if the user hasn't drank enough water
-        if (hour == notificationtimer  && totalDrankPerType["Water"]!! < 150) {
-            with(NotificationManagerCompat.from(requireContext())) {
+        //Send a notification every 3 hours starting from 12:00
+        if (hour in 12..22 && hour % 3 == 0 && (totalDrankPerType["Water"]!! < 150 || totalDrankPerType["Water"] == null)) {
+            with(NotificationManagerCompat.from(this.requireContext())) {
                 // notificationId is a unique int for each notification that you must define
                 notify(notificationId, builder.build())
             }
-            notificationtimer += 3
         }
-        if (notificationtimer > 24) { notificationtimer = 12 }
         return root
     }
 
