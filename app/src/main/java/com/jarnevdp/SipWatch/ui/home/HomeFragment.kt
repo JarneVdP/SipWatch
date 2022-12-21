@@ -80,7 +80,7 @@ class HomeFragment : Fragment() {
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         //Send a notification every 3 hours starting from 12:00
-        if (hour in 12..22 && hour % 3 == 0 && (totalDrankPerType["Water"]!! < 150 || totalDrankPerType["Water"] == null)) {
+        if (hour in 12..24 && hour % 17 == 0 && totalDrankPerType["Water"] != null && totalDrankPerType["Water"]!! < 150) {
             with(NotificationManagerCompat.from(this.requireContext())) {
                 // notificationId is a unique int for each notification that you must define
                 notify(notificationId, builder.build())
